@@ -1,14 +1,14 @@
 from rest_framework import serializers
-from .models import Film, CardClient, Rezervare
+from .models import Film, Utilizator, Rezervare
 
 class FilmSerializer(serializers.ModelSerializer):
     class Meta:
         model = Film
         fields = '__all__'
 
-class CardClientSerializer(serializers.ModelSerializer):
+class UtilizatorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CardClient
+        model = Utilizator
         fields = '__all__'
 
 class RezervareSerializer(serializers.ModelSerializer):

@@ -2,20 +2,28 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
 import { FilmProps } from "../utils/props";
-import { fetchFilme, stergereFilm } from "../utils/api";
+import { fetchFilmeCuFiltre, fetchFilmeFaraFiltre, stergereFilm } from "../utils/api";
 
 function List() {
     const [filmData, setFilmData] = useState<FilmProps[]>();
+    const [inProgram, setInProgram] = useState<boolean>();
 
     async function fetchData() {
-        const result = await fetchFilme();
+        let result;
+        if (inProgram !== undefined) {
+            console.log(inProgram);
+            result = await fetchFilmeCuFiltre(inProgram);
+        } else {
+            result = await fetchFilmeFaraFiltre();
+            console.log(result.data);
+        }
+
         setFilmData(result);
-        console.log(result);
     }
 
     useEffect(() => {
         fetchData();
-    }, []);
+    });
 
     async function handleStergere(filmId: number) {
         await stergereFilm(filmId);
@@ -23,8 +31,23 @@ function List() {
         toast.success("Film sters cu success!");
     }
 
+    function resetFilters() {
+        setInProgram(undefined);
+        fetchData();
+    }
+
     return (
         <div className="container">
+            <div className="dropdown">
+                <button className="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    In Program
+                </button>
+                <ul className="dropdown-menu">
+                    <li><button className="dropdown-item" onClick={() => setInProgram(true)}>Da</button></li>
+                    <li><button className="dropdown-item" onClick={() => setInProgram(false)}>Nu</button></li>
+                </ul>
+                <button type="button" className="btn btn-primary btn-sm ms-2" onClick={resetFilters}>Reset Filter</button>
+            </div>
             <table className="table tabke-bordered">
                 <thead>
                     <tr>

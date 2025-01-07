@@ -30,7 +30,18 @@ export async function adaugareFilm(filmFields: AdaugareFilmProps) {
     }
 }
 
-export async function fetchFilme() {
+export async function fetchFilmeCuFiltre(in_program: boolean | undefined) {
+    try {
+        const result = await axios.get(baseUrl, {
+            params:  {in_program}
+        });
+        return Promise.resolve(result.data);
+    } catch (error) {
+        throw new Error(error as string);
+    }
+}
+
+export async function fetchFilmeFaraFiltre() {
     try {
         const result = await axios.get(baseUrl);
         return Promise.resolve(result.data);
