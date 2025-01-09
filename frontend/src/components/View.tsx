@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FilmProps, initialFilm } from "../utils/props";
-import { fetchFilm } from "../utils/api";
+import { fetchFilm } from "../utils/api/filme_api";
 
 function View() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [film, setFilm] = useState<FilmProps>(initialFilm);
-    console.log(film);
 
     useEffect(() => {
         async function fetchData(id: string | undefined) {
@@ -19,7 +18,7 @@ function View() {
     }, [id]);
 
     function handleBack() {
-        navigate("/");
+        navigate("/home");
     }
 
     return (

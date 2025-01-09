@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { FilmProps, initialFilm } from "../utils/props";
 import React, { useEffect, useState } from "react";
-import { fetchFilm, modificareFilm } from "../utils/api";
+import { fetchFilm, modificareFilm } from "../utils/api/filme_api";
 import { toast } from "react-toastify";
 
 function Edit() {
@@ -29,7 +29,7 @@ function Edit() {
     }
 
     function handleBack() {
-        navigate("/");
+        navigate("/home");
     }
 
     async function handleSubmit(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
